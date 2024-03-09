@@ -1,3 +1,3 @@
-# Typescript Sdk Plate
+# Hyperbridge Graph SDK
 
-This is a simple repo holding setup code for creating a buildable typescript sdk 
+This is a GraphQL sdk that handles querying the Hyperbridge subgraph. It makes interacting the Hyperbridge subgraph seamless, with developers going through the rigorous process of setting up a graphQL client.
