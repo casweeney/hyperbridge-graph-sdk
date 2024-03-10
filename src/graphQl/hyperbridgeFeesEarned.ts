@@ -7,8 +7,10 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 })
 
-export async function handleHyperbridgeFeesEarned(hostAddress: string) {
-  const totalAmountTransferredIntoHost = await handleInTransferTotal(hostAddress)
+export async function handleHyperbridgeFeesEarned(hostAddress: string): Promise<number> {
+  const modifiedHostAddress = hostAddress.toLowerCase()
+
+  const totalAmountTransferredIntoHost = await handleInTransferTotal(modifiedHostAddress)
   const totalRelayerFeeEmittedByHost = await handleRequestEventFeeTotal()
 
   const hyperbridgeFeesEarned = totalAmountTransferredIntoHost - totalRelayerFeeEmittedByHost
