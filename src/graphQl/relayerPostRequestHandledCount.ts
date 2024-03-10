@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client'
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
 import { SUBGRAPH_API_URL } from '../constants'
 import { QueryOptions } from '../types'
 

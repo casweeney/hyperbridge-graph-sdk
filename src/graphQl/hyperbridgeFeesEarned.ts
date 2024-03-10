@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client'
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
 import { SUBGRAPH_API_URL } from '../constants'
 import { QueryOptions } from '../types'
 
@@ -11,10 +11,12 @@ export async function handleHyperbridgeFeesEarned(hostAddress: string) {
   const totalAmountTransferredIntoHost = await handleInTransferTotal(hostAddress)
   const totalRelayerFeeEmittedByHost = await handleRequestEventFeeTotal()
 
-  // const hyperbridgeFeesEarned = totalAmountTransferredIntoHost - totalRelayerFeeEmittedByHost;
+  const hyperbridgeFeesEarned = totalAmountTransferredIntoHost - totalRelayerFeeEmittedByHost
+
+  return hyperbridgeFeesEarned
 }
 
-async function handleInTransferTotal(hostAddress: string) {
+async function handleInTransferTotal(hostAddress: string): Promise<number> {
   const operationName = QueryOptions.InTransferTotal
 
   const response = await client.query({
@@ -31,10 +33,10 @@ async function handleInTransferTotal(hostAddress: string) {
     },
   })
 
-  return response
+  return response.data.inTransferTotal.totalAmountTransferredIn
 }
 
-async function handleRequestEventFeeTotal() {
+async function handleRequestEventFeeTotal(): Promise<number> {
   const operationName = QueryOptions.RequestEventFeeTotal
 
   const response = await client.query({
@@ -48,5 +50,5 @@ async function handleRequestEventFeeTotal() {
       `,
   })
 
-  return response
+  return response.data.requestEventFeeTotals[0].totalRequestFee
 }
