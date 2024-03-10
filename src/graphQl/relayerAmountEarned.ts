@@ -10,6 +10,9 @@ const client = new ApolloClient({
 export async function handleRelayerAmountEarned(hostAddress: string, relayerAddress: string) {
   const operationName = QueryOptions.RelayerPostRequestHandledCount
 
+  const modifiedHostAddress = hostAddress.toLowerCase()
+  const modifiedRelayerAddress = relayerAddress.toLowerCase()
+
   const response = await client.query({
     query: gql`
         query ${operationName}($hostAddress: String!, $relayerAddress: String!) {
@@ -24,8 +27,8 @@ export async function handleRelayerAmountEarned(hostAddress: string, relayerAddr
         }
       `,
     variables: {
-      hostAddress: hostAddress,
-      relayerAddress: relayerAddress,
+      hostAddress: modifiedHostAddress,
+      relayerAddress: modifiedRelayerAddress,
     },
   })
 
