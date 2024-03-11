@@ -1,19 +1,18 @@
 import { gql } from '@apollo/client'
-import { client } from '../constants'
 import { QueryOptions } from '../types'
 
-export async function handleHyperbridgeFeesEarned(hostAddress: string): Promise<number> {
+export async function handleHyperbridgeFeesEarned(client, hostAddress: string): Promise<number> {
   const modifiedHostAddress = hostAddress.toLowerCase()
 
-  const totalAmountTransferredIntoHost = await handleInTransferTotal(modifiedHostAddress)
-  const totalRelayerFeeEmittedByHost = await handleRequestEventFeeTotal()
+  const totalAmountTransferredIntoHost = await handleInTransferTotal(client, modifiedHostAddress)
+  const totalRelayerFeeEmittedByHost = await handleRequestEventFeeTotal(client)
 
   const hyperbridgeFeesEarned = totalAmountTransferredIntoHost - totalRelayerFeeEmittedByHost
 
   return hyperbridgeFeesEarned
 }
 
-async function handleInTransferTotal(hostAddress: string): Promise<number> {
+async function handleInTransferTotal(client, hostAddress: string): Promise<number> {
   const operationName = QueryOptions.InTransferTotal
 
   const response = await client.query({
@@ -33,7 +32,7 @@ async function handleInTransferTotal(hostAddress: string): Promise<number> {
   return response.data.inTransferTotal.totalAmountTransferredIn
 }
 
-async function handleRequestEventFeeTotal(): Promise<number> {
+async function handleRequestEventFeeTotal(client): Promise<number> {
   const operationName = QueryOptions.RequestEventFeeTotal
 
   const response = await client.query({

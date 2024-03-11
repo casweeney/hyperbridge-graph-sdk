@@ -1,8 +1,7 @@
 import { gql } from '@apollo/client'
-import { client } from '../constants'
 import { QueryOptions } from '../types'
 
-export async function handlePostRequestHandledCount() {
+export async function handlePostRequestHandledCount(client) {
   const operationName = QueryOptions.PostRequestHandledCount
 
   const response = await client.query({
