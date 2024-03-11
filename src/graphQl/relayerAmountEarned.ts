@@ -3,7 +3,7 @@ import { client } from '../constants'
 import { QueryOptions } from '../types'
 
 export async function handleRelayerAmountEarned(hostAddress: string, relayerAddress: string) {
-  const operationName = QueryOptions.RelayerPostRequestHandledCount
+  const operationName = QueryOptions.TransferPairTotal
 
   const modifiedHostAddress = hostAddress.toLowerCase()
   const modifiedRelayerAddress = relayerAddress.toLowerCase()
