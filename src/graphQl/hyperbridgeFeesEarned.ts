@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { ApolloClient, NormalizedCacheObject, gql } from '@apollo/client'
 import { QueryOptions } from '../types'
 
 export async function handleHyperbridgeFeesEarned(client, hostAddress: string): Promise<number> {
@@ -12,7 +12,10 @@ export async function handleHyperbridgeFeesEarned(client, hostAddress: string): 
   return hyperbridgeFeesEarned
 }
 
-async function handleInTransferTotal(client, hostAddress: string): Promise<number> {
+async function handleInTransferTotal(
+  client: ApolloClient<NormalizedCacheObject>,
+  hostAddress: string
+): Promise<number> {
   const operationName = QueryOptions.InTransferTotal
 
   const response = await client.query({
